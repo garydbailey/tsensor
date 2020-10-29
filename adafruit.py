@@ -1,3 +1,8 @@
+# adafruit.py
+#
+# v0.2 29-10-2020 - added configuration parameter for the adafruit feed
+#
+
 from Adafruit_IO import Client, RequestError, Feed
 from configparser import ConfigParser
 import os
@@ -11,11 +16,16 @@ user = userinfo["ADAFRUIT_IO_USERNAME"]
 key = userinfo["ADAFRUIT_IO_KEY"]
 ADAFRUIT_IO_USERNAME =  user.replace("'","")
 ADAFRUIT_IO_KEY = key.replace("'","")
+feedinfo = config_object["FEEDINFO"]
+feed_name = feedinfo["ADAFRUIT_FEED"]
+ADAFRUIT_FEED = feed_name.replace("'","")
+
 
 DEBUG = 1
 if DEBUG == 1:
 	print("User = " + ADAFRUIT_IO_USERNAME)
 	print("Key = " + ADAFRUIT_IO_KEY)
+	print("Feed = " + ADAFRUIT_FEED)
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -46,9 +56,9 @@ def read_temp():
 aio = Client(ADAFRUIT_IO_USERNAME, ADAFRUIT_IO_KEY)
 
 try:
-	test_feed = aio.feeds('test-feed')
+	test_feed = aio.feeds(ADAFRUIT_FEED)
 except RequestError: # doesn't exist, create a new feed
-	test = Feed(name='test-feed')
+	test = Feed(name=ADAFRUIT_FEED)
 	test_feed = aio.create_feed(test)
 
 temperature = (read_temp())

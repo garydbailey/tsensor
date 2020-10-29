@@ -1,0 +1,6 @@
+[USERINFO]
+ADAFRUIT_IO_USERNAME = 'my-user-name'
+ADAFRUIT_IO_KEY = 'my-key'
+[FEEDINFO]
+ADAFRUIT_FEED = 'my-feed'
+
